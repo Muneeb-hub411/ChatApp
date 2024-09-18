@@ -35,3 +35,32 @@ export const sendMessage = async (req, res) => {
     });
   }
 };
+
+export const getMessage = async (req, res) => {
+  try {
+    const { id: userToChat } = req.params;
+    const senderId = req.user._id;
+
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, userToChat] },
+    }).populate("messages");
+
+    if (!conversation) {
+      return res.status(400).send({
+        success: false,
+        message: "No chat found",
+      });
+    }
+    const message = conversation.messages;
+    return res.status(200).send({
+      success: true,
+      message,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error in getting chat",
+    });
+  }
+};
