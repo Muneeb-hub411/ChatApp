@@ -45,7 +45,7 @@ export const login = async (req, res) => {
     const { username, password } = req.body;
 
     const user = await UserModel.findOne({ username });
-    const ispasswordcorrect = await bcrypt.compare(password, user.password);
+    const ispasswordcorrect = await bcrypt.compare(password, user?.password);
 
     if (!user || !ispasswordcorrect) {
       return res.status(400).send({
