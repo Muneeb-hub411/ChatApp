@@ -5,6 +5,7 @@ import { configDotenv } from "dotenv";
 import authRoute from "./router/auth.route.js";
 import messageRoute from "./router/message.route.js";
 import ConnectToMongo from "./db/ConnectToMongodb.js";
+import userRoute from "./router/user.route.js";
 const app = express();
 configDotenv();
 
@@ -14,6 +15,7 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoute);
 app.use("/api/message", messageRoute);
+app.use("/api/user", userRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to ChatApp</h1>");
