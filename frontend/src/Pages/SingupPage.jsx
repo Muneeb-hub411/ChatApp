@@ -1,4 +1,25 @@
+import { useState } from "react";
 const Signup = () => {
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target; // Destructure 'name' and 'value' from the event target (the input field)
+    setInputs((prev) => ({
+      ...prev, // Spread the previous state to keep other fields unchanged
+      [name]: value, // Update the field that matches the 'name' with the new 'value'
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(inputs);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#753a88] to-[#cc2b5e]">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -6,7 +27,7 @@ const Signup = () => {
           Sign Up <span className="text-blue-500">Chat App</span>
         </h2>
 
-        <form className="space-y-4">
+        <form className="space-y-4 " onSubmit={handleSubmit}>
           {/* Full Name */}
           <div className="form-control">
             <label className="label">
@@ -18,6 +39,8 @@ const Signup = () => {
               placeholder="John Doe"
               className="input input-bordered w-full"
               required
+              value={inputs.fullname}
+              onChange={handleChange}
             />
           </div>
 
@@ -32,6 +55,8 @@ const Signup = () => {
               placeholder="Username"
               className="input input-bordered w-full"
               required
+              value={inputs.username}
+              onChange={handleChange}
             />
           </div>
 
@@ -46,6 +71,8 @@ const Signup = () => {
               placeholder="••••••••"
               className="input input-bordered w-full"
               required
+              value={inputs.password}
+              onChange={handleChange}
             />
           </div>
 
@@ -60,6 +87,8 @@ const Signup = () => {
               placeholder="••••••••"
               className="input input-bordered w-full"
               required
+              value={inputs.confirmPassword}
+              onChange={handleChange}
             />
           </div>
 
@@ -75,6 +104,8 @@ const Signup = () => {
                   name="gender"
                   value="male"
                   className="radio radio-primary"
+                  checked={inputs.gender === "male"}
+                  onChange={handleChange}
                 />
                 <span>Male</span>
               </label>
@@ -84,6 +115,8 @@ const Signup = () => {
                   name="gender"
                   value="female"
                   className="radio radio-primary"
+                  checked={inputs.gender === "female"}
+                  onChange={handleChange}
                 />
                 <span>Female</span>
               </label>
