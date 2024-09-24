@@ -1,4 +1,7 @@
 import { useState } from "react";
+import useSignup from "../hooks/UseSignUp";
+import toast from "react-hot-toast";
+
 const Signup = () => {
   const [inputs, setInputs] = useState({
     fullName: "",
@@ -7,6 +10,7 @@ const Signup = () => {
     confirmPassword: "",
     gender: "",
   });
+  const { loading, signup } = useSignup();
   const handleChange = (e) => {
     const { name, value } = e.target; // Destructure 'name' and 'value' from the event target (the input field)
     setInputs((prev) => ({
@@ -17,7 +21,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    await signup(inputs);
+    toast.success("login successfully");
   };
 
   return (
@@ -125,8 +130,16 @@ const Signup = () => {
 
           {/* Submit Button */}
           <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary w-full">
-              Sign Up
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </div>
         </form>
