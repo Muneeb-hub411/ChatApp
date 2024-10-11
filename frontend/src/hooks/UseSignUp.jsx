@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const signup = async ({
     fullName,
@@ -42,7 +40,6 @@ const useSignup = () => {
         throw new Error(data.error);
       }
       localStorage.setItem("chat-user", JSON.stringify(data));
-      navigate("/login");
     } catch (error) {
       toast.error(error.message);
     } finally {
